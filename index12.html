@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title></title>
+</head>
+
+<body>
+ 
+</body>
+
+</html><!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIDDY'S CORNER PUBLIC SCHOOL</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        .button {
+            background: #ff4081;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background: #e91e63;
+        }
+        .notice-board {
+            margin-top: 20px;
+            border: 1px solid #fff;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            height: 250px;
+            overflow-y: auto;
+            border-radius: 10px;
+        }
+        .notice {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .notice .message {
+            font-weight: bold;
+        }
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            color: red;
+            font-size: 20px;
+        }
+        #adminSection {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KIDDY'S CORNER PUBLIC SCHOOL</h1><button class="button" onclick="showAdmissionForm()">Admission Form</button>
+    <button class="button" onclick="showLogin()">Admin Login</button>
+    
+    <h2>Notice Board</h2>
+    <div class="notice-board" id="notices">
+        <p id="noMessages">No new messages.</p>
+    </div>
+    
+    <div class="form-container" id="admissionForm">
+        <span class="close-btn" onclick="closeForm()">X</span>
+        <h3>Student Admission Form</h3>
+        <input type="text" id="studentName" placeholder="Student's Name" minlength="4"><br>
+        <input type="text" id="fatherName" placeholder="Father's Name" minlength="4"><br>
+        <input type="text" id="motherName" placeholder="Mother's Name" minlength="4"><br>
+        <input type="number" id="studentAge" placeholder="Student's Age"><br>
+        <input type="tel" id="mobileNo" placeholder="Mobile Number" pattern="\d{10}"><br>
+        <input type="tel" id="whatsappNo" placeholder="WhatsApp Number" pattern="\d{10}"><br>
+        <button class="button" onclick="submitAdmission()">Submit</button>
+        <p id="thankYouMessage" style="display: none; color: yellow;">Thank you! Redirecting...</p>
+    </div>
+    
+    <div id="adminSection">
+        <h3>Post a Notice</h3>
+        <textarea id="noticeText" placeholder="Enter notice"></textarea><br>
+        <button class="button" onclick="postNotice()">Submit Notice</button>
+    </div>
+</div>
+
+<script>
+    let isAdminLoggedIn = false;
+
+    function showLogin() {
+        if (!isAdminLoggedIn) {
+            let password = prompt("Enter Admin Password:");
+            if (password === "prince123") {
+                alert("Admin Logged In Successfully");
+                document.getElementById("adminSection").style.display = "block";
+                isAdminLoggedIn = true;
+            } else {
+                alert("Invalid Password");
+            }
+        } else {
+            alert("Admin already logged in");
+        }
+    }
+
+    function showAdmissionForm() {
+        document.getElementById('admissionForm').style.display = 'block';
+    }
+
+    function closeForm() {
+        document.getElementById('admissionForm').style.display = 'none';
+    }
+
+    function postNotice() {
+        let noticeText = document.getElementById('noticeText').value.trim();
+        let now = new Date();
+        let timeStamp = now.toLocaleString();
+        if (!noticeText) {
+            alert('Please enter a notice.');
+            return;
+        }
+        let noticeBoard = document.getElementById('notices');
+        let noMessages = document.getElementById('noMessages');
+        if (noMessages) noMessages.remove();
+        
+        let newNotice = document.createElement('div');
+        newNotice.classList.add('notice');
+        newNotice.innerHTML = `<span class='time'>${timeStamp}:</span> <span class='message'>${noticeText}</span>`;
+        
+        noticeBoard.prepend(newNotice);
+        document.getElementById('noticeText').value = "";
+    }
+</script>
+
+</body>
+</html>
